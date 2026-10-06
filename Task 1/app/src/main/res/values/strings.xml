@@ -1,0 +1,12 @@
+<resources>
+        <string name="app_name">UNEB e-Results</string>
+        <string name="tagline">Excellence in Assessment</string>
+        <string name="loading_status">Securing your connection…</string>
+        <string name="retry">Retry</string>
+        <string name="official_app">Official Uganda National Examinations Board app</string>
+        <string name="err_no_internet">No internet connection. Check your data or Wi-Fi and try again.</string>
+        <string name="err_time">We could not verify the time. Please check your date &amp; time settings and try again.</string>
+        <string name="err_server">The service is very busy right now. Please try again in a moment.</string>
+        <string name="err_unknown">Something went wrong. Please try again.</string>
+
+</resources>
