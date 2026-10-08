@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'Maven-3.9'
+        jdk 'JDK-17'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Checkstyle Enforcement') {
+            steps {
+                sh 'mvn clean checkstyle:check'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+    }
+
+    post {
+        always {
+            recordIssues(
+                enabledForFailure: true,
+                tools: [
+                    checkStyle(
+                        pattern: 'target/checkstyle-result.xml',
+                        reportEncoding: 'UTF-8'
+                    )
+                ]
+            )
+        }
+        failure {
+            echo '❌ Build blocked: Checkstyle style violations detected. Fix them and push again.'
+        }
+        success {
+            echo '✅ Build passed: Code style is compliant with UNEB e-Results standards.'
+        }
+    }
+}
