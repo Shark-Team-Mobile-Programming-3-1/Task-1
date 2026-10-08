@@ -3,7 +3,6 @@ pipeline {
 
     tools {
         maven 'Maven'
-        jdk 'JDK22'
     }
 
     stages {
@@ -15,29 +14,22 @@ pipeline {
 
         stage('Checkstyle Enforcement') {
             steps {
-                bat 'mvn clean checkstyle:check'
+                dir('Task 1') {
+                    bat 'mvn clean checkstyle:check'
+                }
             }
         }
 
         stage('Build') {
             steps {
-                bat 'mvn clean package'
+                dir('Task 1') {
+                    bat 'mvn clean package'
+                }
             }
         }
     }
 
     post {
-        always {
-            recordIssues(
-                enabledForFailure: true,
-                tools: [
-                    checkStyle(
-                        pattern: 'target/checkstyle-result.xml',
-                        reportEncoding: 'UTF-8'
-                    )
-                ]
-            )
-        }
         failure {
             echo '❌ Build blocked: Checkstyle style violations detected. Fix them and push again.'
         }
