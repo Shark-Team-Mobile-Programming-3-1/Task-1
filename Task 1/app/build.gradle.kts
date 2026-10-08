@@ -33,13 +33,31 @@ android {
     }
 }
 
+// ─────────────────────────────────────────────
+//  CHECKSTYLE CONFIGURATION
+// ─────────────────────────────────────────────
+checkstyle {
+    toolVersion = "10.12.4"
+    configFile = rootProject.file("config/checkstyle/checkstyle.xml")
+    isIgnoreFailures = false
+    maxWarnings = 0
+    maxErrors = 0
+}
+
+tasks.withType<Checkstyle>().configureEach {
+    isIgnoreFailures = false
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
+}
+
 dependencies {
     implementation(libs.appcompat)
     implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)
-
 
     implementation("androidx.core:core-splashscreen:1.0.1")
     implementation("androidx.appcompat:appcompat:1.7.0")
