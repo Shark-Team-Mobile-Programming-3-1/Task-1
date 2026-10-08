@@ -23,7 +23,7 @@ pipeline {
                 enabledForFailure: true,
                 tools: [
                     checkStyle(
-                        pattern: 'Task 1/app/build/reports/checkstyle/main.xml',
+                        pattern: '**/build/reports/checkstyle/main.xml',
                         reportEncoding: 'UTF-8'
                     )
                 ]
