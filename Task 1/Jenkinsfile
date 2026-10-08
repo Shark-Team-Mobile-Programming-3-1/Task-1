@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Maven'
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -15,15 +11,7 @@ pipeline {
         stage('Checkstyle Enforcement') {
             steps {
                 dir('Task 1') {
-                    bat 'mvn clean checkstyle:check'
-                }
-            }
-        }
-
-        stage('Build') {
-            steps {
-                dir('Task 1') {
-                    bat 'mvn clean package'
+                    bat 'gradlew.bat :app:checkstyleMain --no-daemon'
                 }
             }
         }
@@ -34,7 +22,7 @@ pipeline {
             echo '❌ Build blocked: Checkstyle style violations detected. Fix them and push again.'
         }
         success {
-            echo '✅ Build passed: Code style is compliant with UNEB e-Results standards.'
+            echo '✅ Build passed: Code is compliant with UNEB e-Results standards.'
         }
     }
 }
