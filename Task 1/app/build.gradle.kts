@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    checkstyle
 }
 
 android {
@@ -33,33 +34,18 @@ android {
 }
 
 // ─────────────────────────────────────────────
-//  CUSTOM CHECKSTYLE TASK FOR ANDROID
+//  CHECKSTYLE CONFIGURATION
 // ─────────────────────────────────────────────
-tasks.register<Checkstyle>("checkstyleMain") {
-    // 1. Define the source files to check
-    source = fileTree("src/main/java") {
-        include("**/*.java")
-    }
-
-    // 2. Set the classpath (can be empty for basic checks)
-    classpath = files()
-
-    // 3. Point to your Checkstyle configuration file
+checkstyle {
+    toolVersion = "10.12.4"
     configFile = rootProject.file("config/checkstyle/checkstyle.xml")
-
-    // 4. Provide the Checkstyle library (this fixes 'checkstyleClasspath')
-    // The plugin should auto-resolve this from the toolVersion, but we make it explicit.
-    checkstyleClasspath = configurations.getByName("checkstyle")
-
-    // 5. Set the config directory (this fixes 'configDirectory')
-    configDirectory.set(layout.projectDirectory.dir("config/checkstyle"))
-
-    // 6. Fail the build if violations are found
     isIgnoreFailures = false
     maxWarnings = 0
     maxErrors = 0
+}
 
-    // 7. Configure report outputs (this fixes 'outputLocation' errors)
+tasks.withType<Checkstyle>().configureEach {
+    isIgnoreFailures = false
     reports {
         xml.required.set(true)
         html.required.set(true)
@@ -67,8 +53,6 @@ tasks.register<Checkstyle>("checkstyleMain") {
 }
 
 dependencies {
-    // Required for the Checkstyle tool library
-    checkstyle("com.puppycrawl.tools:checkstyle:10.12.4")
     implementation(libs.appcompat)
     implementation(libs.material)
     testImplementation(libs.junit)
