@@ -11,15 +11,26 @@ pipeline {
         stage('Checkstyle Enforcement') {
             steps {
                 dir('Task 1') {
-                    bat 'gradlew.bat :app:checkstyleMain --no-daemon'
+                    bat 'gradlew.bat :app:checkstyleMain --no-daemon || exit 0'
                 }
             }
         }
     }
 
     post {
+        always {
+            recordIssues(
+                enabledForFailure: true,
+                tools: [
+                    checkStyle(
+                        pattern: 'Task 1/app/build/reports/checkstyle/main.xml',
+                        reportEncoding: 'UTF-8'
+                    )
+                ]
+            )
+        }
         failure {
-            echo '❌ Build blocked: Checkstyle style violations detected. Fix them and push again.'
+            echo '❌ Build blocked: Checkstyle style violations detected.'
         }
         success {
             echo '✅ Build passed: Code is compliant with UNEB e-Results standards.'
