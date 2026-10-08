@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.android.application)
-    checkstyle
 }
 
 android {
@@ -34,22 +33,26 @@ android {
 }
 
 // ─────────────────────────────────────────────
-//  CHECKSTYLE CONFIGURATION
+//  CUSTOM CHECKSTYLE TASK FOR ANDROID
 // ─────────────────────────────────────────────
-checkstyle {
-    toolVersion = "10.12.4"
+tasks.register<Checkstyle>("checkstyleMain") {
+    source = fileTree("src/main/java") {
+        include("**/*.java")
+    }
+    classpath = files()
     configFile = rootProject.file("config/checkstyle/checkstyle.xml")
     isIgnoreFailures = false
     maxWarnings = 0
     maxErrors = 0
-}
-
-tasks.withType<Checkstyle>().configureEach {
-    isIgnoreFailures = false
     reports {
         xml.required.set(true)
         html.required.set(true)
     }
+}
+
+// Make the standard 'check' task depend on checkstyle
+tasks.named("check") {
+    dependsOn("checkstyleMain")
 }
 
 dependencies {
