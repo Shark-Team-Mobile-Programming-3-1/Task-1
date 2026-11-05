@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Adds padding so Android 12+ does not crop the crest with its circular mask -->
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/uneb_logo"
+    android:inset="22%" />
