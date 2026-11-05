@@ -3,6 +3,7 @@ package com.example.task1.splash;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -57,12 +58,16 @@ public class SplashActivity extends AppCompatActivity {
             case LOADING:
                 progress.setVisibility(View.VISIBLE);
                 retry.setVisibility(View.GONE);
+                status.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                        getResources().getDimension(R.dimen.status_text_loading));
                 status.setText(R.string.loading_status);
                 break;
 
             case ERROR:
                 progress.setVisibility(View.GONE);
                 retry.setVisibility(View.VISIBLE);
+                status.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                        getResources().getDimension(R.dimen.status_text_error));
                 status.setText(messageFor(state.reason));
                 break;
 

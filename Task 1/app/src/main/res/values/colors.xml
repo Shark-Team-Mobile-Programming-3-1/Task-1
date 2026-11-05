@@ -10,4 +10,9 @@
 
     <color name="uneb_text">#1B1B1F</color>
     <color name="uneb_error">#B3261E</color>
+
+    <!-- Figma design colours (UI/UX task) -->
+    <color name="uneb_green">#FF23F807</color>
+    <color name="uneb_green_track">#FFD8FED3</color>
+    <color name="uneb_purple">#FF7B2B9A</color>
 </resources>

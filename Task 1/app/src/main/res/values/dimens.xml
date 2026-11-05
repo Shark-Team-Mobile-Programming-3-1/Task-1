@@ -1,0 +1,5 @@
+<resources>
+    <!-- Status text: smaller while loading, larger for the error message (from Figma) -->
+    <dimen name="status_text_loading">16sp</dimen>
+    <dimen name="status_text_error">20sp</dimen>
+</resources>
